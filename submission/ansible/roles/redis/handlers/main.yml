@@ -1,0 +1,5 @@
+- name: restart redis
+  shell: |
+    pkill redis-server || true
+    sleep 1
+    redis-server {{ redis_conf_path }}

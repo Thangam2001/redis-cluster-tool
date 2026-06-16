@@ -1,0 +1,13 @@
+- hosts: redis-node-1
+  tasks:
+    - name: Get cluster nodes
+      command: redis-cli -p 6379 cluster nodes
+      register: cluster_nodes
+    - debug: var=cluster_nodes.stdout_lines
+
+- hosts: redis_cluster
+  tasks:
+    - name: Get INFO
+      command: redis-cli -p 6379 info
+      register: redis_info
+    - debug: var=redis_info.stdout_lines

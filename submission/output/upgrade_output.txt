@@ -1,0 +1,306 @@
+✓ Docker found: Docker version 29.5.3, build d1c06ef
+✓ Ansible found: ansible-playbook [core 2.20.1]
+Proceeding...
+=== Rolling Upgrade to v7.2.6 ===
+
+[Pre-flight] Checking cluster health...
+[Pre-flight] Cluster state: ok
+[Pre-flight] Running data verify baseline...
+Verifying 1000 keys...
+=== Verify Summary ===
+PASS — 1000/1000 keys verified
+
+=== Phase 1: Upgrading Replicas ===
+
+Upgrading replica redis-node-4...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-4 --extra-vars new_version=7.2.6 target_host=redis-node-4
+
+PLAY [redis-node-4] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-4]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-4]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-4
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-4] => (item=/data/redis)
+ok: [redis-node-4] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-4]
+
+TASK [redis : Extract Redis source] ********************************************
+ok: [redis-node-4]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-4]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-4]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-4]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-4]
+
+PLAY RECAP *********************************************************************
+redis-node-4               : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[1/6] Upgraded replica redis-node-4 — cluster: ok
+
+Upgrading replica redis-node-5...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-5 --extra-vars new_version=7.2.6 target_host=redis-node-5
+
+PLAY [redis-node-5] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-5]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-5]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-5
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-5] => (item=/data/redis)
+ok: [redis-node-5] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-5]
+
+TASK [redis : Extract Redis source] ********************************************
+ok: [redis-node-5]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-5]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-5]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-5]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-5]
+
+PLAY RECAP *********************************************************************
+redis-node-5               : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[2/6] Upgraded replica redis-node-5 — cluster: ok
+
+Upgrading replica redis-node-6...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-6 --extra-vars new_version=7.2.6 target_host=redis-node-6
+
+PLAY [redis-node-6] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-6]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-6]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-6
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-6] => (item=/data/redis)
+ok: [redis-node-6] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-6]
+
+TASK [redis : Extract Redis source] ********************************************
+ok: [redis-node-6]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-6]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-6]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-6]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-6]
+
+PLAY RECAP *********************************************************************
+redis-node-6               : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[3/6] Upgraded replica redis-node-6 — cluster: ok
+
+=== Phase 2: Upgrading Masters ===
+  Found replica 10.10.0.15 -> local port 6385
+
+Found replica at local port 6385 for master 10.10.0.11
+Triggering CLUSTER FAILOVER on replica port 6385...
+  Sending CLUSTER FAILOVER to port 6385
+  Waiting 8s for failover to complete...
+Upgrading former master redis-node-1...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-1 --extra-vars new_version=7.2.6 target_host=redis-node-1
+
+PLAY [redis-node-1] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-1]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-1]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-1
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-1] => (item=/data/redis)
+ok: [redis-node-1] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-1]
+
+TASK [redis : Extract Redis source] ********************************************
+ok: [redis-node-1]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-1]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-1]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-1]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-1]
+
+PLAY RECAP *********************************************************************
+redis-node-1               : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[4/6] Upgraded redis-node-1 — cluster: ok
+  Found replica 10.10.0.16 -> local port 6386
+
+Found replica at local port 6386 for master 10.10.0.12
+Triggering CLUSTER FAILOVER on replica port 6386...
+  Sending CLUSTER FAILOVER to port 6386
+  Waiting 8s for failover to complete...
+Upgrading former master redis-node-2...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-2 --extra-vars new_version=7.2.6 target_host=redis-node-2
+
+PLAY [redis-node-2] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-2]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-2]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-2
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-2] => (item=/data/redis)
+ok: [redis-node-2] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-2]
+
+TASK [redis : Extract Redis source] ********************************************
+changed: [redis-node-2]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-2]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-2]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-2]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-2]
+
+PLAY RECAP *********************************************************************
+redis-node-2               : ok=10   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[5/6] Upgraded redis-node-2 — cluster: ok
+  Found replica 10.10.0.14 -> local port 6384
+
+Found replica at local port 6384 for master 10.10.0.13
+Triggering CLUSTER FAILOVER on replica port 6384...
+  Sending CLUSTER FAILOVER to port 6384
+  Waiting 8s for failover to complete...
+Upgrading former master redis-node-3...
+[Ansible] Running: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/upgrade.yml --limit redis-node-3 --extra-vars new_version=7.2.6 target_host=redis-node-3
+
+PLAY [redis-node-3] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-3]
+
+TASK [Stop redis] **************************************************************
+changed: [redis-node-3]
+
+TASK [Install new version] *****************************************************
+included: redis for redis-node-3
+
+TASK [redis : Ensure data and config dirs exist] *******************************
+ok: [redis-node-3] => (item=/data/redis)
+ok: [redis-node-3] => (item=/etc/redis)
+
+TASK [redis : Download Redis source] *******************************************
+ok: [redis-node-3]
+
+TASK [redis : Extract Redis source] ********************************************
+changed: [redis-node-3]
+
+TASK [redis : Build Redis] *****************************************************
+ok: [redis-node-3]
+
+TASK [redis : Install Redis binaries] ******************************************
+changed: [redis-node-3]
+
+TASK [Start redis] *************************************************************
+changed: [redis-node-3]
+
+TASK [Wait for port] ***********************************************************
+ok: [redis-node-3]
+
+PLAY RECAP *********************************************************************
+redis-node-3               : ok=10   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Waiting for cluster to stabilize...
+  Cluster is ok
+[6/6] Upgraded redis-node-3 — cluster: ok
+
+=== Post-Upgrade Verification ===
+Verifying 1000 keys...
+=== Verify Summary ===
+PASS — 1000/1000 keys verified
+Cluster State: ok
+
+MASTERS
+  10.10.0.15:6379 [master] v7.2.6 slots: 0-5460 keys: 333 mem: 1.83M
+  10.10.0.14:6379 [master] v7.2.6 slots: 10923-16383 keys: 343 mem: 1.83M
+  10.10.0.16:6379 [master] v7.2.6 slots: 5461-10922 keys: 324 mem: 1.83M
+
+REPLICAS
+  10.10.0.12:6379 [replica] v7.2.6 replicating: 10.10.0.16:6379 mem: 1.69M
+  10.10.0.13:6379 [replica] v7.2.6 replicating: 10.10.0.14:6379 mem: 1.67M
+  10.10.0.11:6379 [replica] v7.2.6 replicating: 10.10.0.15:6379 mem: 1.76M
+
+UPGRADE COMPLETE — all nodes on v7.2.6, data integrity verified

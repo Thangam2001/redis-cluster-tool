@@ -1,0 +1,186 @@
+✓ Container runtime found: Docker version 29.5.3, build d1c06ef
+✓ Ansible found: ansible-playbook [core 2.20.1]
+Prerequisite check passed. Proceeding...
+
+=== Provisioning Redis Cluster v7.0.15 ===
+[Ansible] Executing command: ansible-playbook -i /home/thangaprabu/project/redis-tool-project/submission/ansible/inventory/hosts.ini /home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/provision.yml --extra-vars redis_version=7.0.15
+
+PLAY [redis_cluster] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-4]
+ok: [redis-node-1]
+ok: [redis-node-5]
+ok: [redis-node-3]
+ok: [redis-node-2]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Ensure build dependencies are installed] ***
+ok: [redis-node-1]
+ok: [redis-node-4]
+ok: [redis-node-3]
+ok: [redis-node-2]
+ok: [redis-node-5]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Ensure data and config directories exist] ***
+ok: [redis-node-2] => (item=/data/redis)
+ok: [redis-node-3] => (item=/data/redis)
+ok: [redis-node-5] => (item=/data/redis)
+ok: [redis-node-1] => (item=/data/redis)
+ok: [redis-node-4] => (item=/data/redis)
+ok: [redis-node-2] => (item=/etc/redis)
+ok: [redis-node-1] => (item=/etc/redis)
+ok: [redis-node-5] => (item=/etc/redis)
+ok: [redis-node-3] => (item=/etc/redis)
+ok: [redis-node-4] => (item=/etc/redis)
+ok: [redis-node-6] => (item=/data/redis)
+ok: [redis-node-6] => (item=/etc/redis)
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Download Redis source tarball] ***
+ok: [redis-node-1]
+ok: [redis-node-4]
+ok: [redis-node-2]
+ok: [redis-node-5]
+ok: [redis-node-3]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Extract Redis source] ***
+ok: [redis-node-3]
+ok: [redis-node-5]
+ok: [redis-node-4]
+ok: [redis-node-2]
+ok: [redis-node-1]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Build Redis from source] ***
+ok: [redis-node-5]
+ok: [redis-node-2]
+ok: [redis-node-4]
+ok: [redis-node-1]
+ok: [redis-node-3]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Install Redis binaries] ***
+changed: [redis-node-1]
+changed: [redis-node-2]
+changed: [redis-node-3]
+changed: [redis-node-5]
+changed: [redis-node-4]
+changed: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Deploy redis.conf from template] ***
+ok: [redis-node-1]
+ok: [redis-node-3]
+ok: [redis-node-4]
+ok: [redis-node-2]
+ok: [redis-node-5]
+ok: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Start Redis server] ***
+changed: [redis-node-2]
+changed: [redis-node-1]
+changed: [redis-node-3]
+changed: [redis-node-4]
+changed: [redis-node-5]
+changed: [redis-node-6]
+
+TASK [/home/thangaprabu/project/redis-tool-project/submission/ansible/playbooks/../roles/redis : Wait for Redis port to be ready] ***
+ok: [redis-node-1]
+ok: [redis-node-5]
+ok: [redis-node-3]
+ok: [redis-node-2]
+ok: [redis-node-4]
+ok: [redis-node-6]
+
+PLAY [redis-node-1] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [redis-node-1]
+
+TASK [Wait for all nodes to be ready] ******************************************
+ok: [redis-node-1] => (item=10.10.0.11)
+ok: [redis-node-1] => (item=10.10.0.12)
+ok: [redis-node-1] => (item=10.10.0.13)
+ok: [redis-node-1] => (item=10.10.0.14)
+ok: [redis-node-1] => (item=10.10.0.15)
+ok: [redis-node-1] => (item=10.10.0.16)
+
+TASK [Form Redis Cluster] ******************************************************
+changed: [redis-node-1]
+
+TASK [Show cluster create output] **********************************************
+ok: [redis-node-1] => {
+    "cluster_create.stdout_lines": [
+        "\u001b[29;1m>>> Performing hash slots allocation on 6 nodes...",
+        "\u001b[0mMaster[0] -> Slots 0 - 5460",
+        "Master[1] -> Slots 5461 - 10922",
+        "Master[2] -> Slots 10923 - 16383",
+        "Adding replica 10.10.0.15:6379 to 10.10.0.11:6379",
+        "Adding replica 10.10.0.16:6379 to 10.10.0.12:6379",
+        "Adding replica 10.10.0.14:6379 to 10.10.0.13:6379",
+        "M: 8a8bf31ae259641baef33f68fcd32eeaca81dbb8 10.10.0.11:6379",
+        "   slots:[0-5460] (5461 slots) master",
+        "M: d4949b165310dd3e4de53005e0a93f8f6d8d9fbe 10.10.0.12:6379",
+        "   slots:[5461-10922] (5462 slots) master",
+        "M: d56526901659a710ce450194bfbd1bd60926ad54 10.10.0.13:6379",
+        "   slots:[10923-16383] (5461 slots) master",
+        "S: 7ca50ce114444c4795876480ce7d5dbf4cf659e0 10.10.0.14:6379",
+        "   replicates d56526901659a710ce450194bfbd1bd60926ad54",
+        "S: 5f308d65a38d3dca2019a7dd5844ba7411ca4a76 10.10.0.15:6379",
+        "   replicates 8a8bf31ae259641baef33f68fcd32eeaca81dbb8",
+        "S: 494e8c8172d7658656dfdf6d16504b73adefd36b 10.10.0.16:6379",
+        "   replicates d4949b165310dd3e4de53005e0a93f8f6d8d9fbe",
+        "\u001b[29;1m>>> Nodes configuration updated",
+        "\u001b[0m\u001b[29;1m>>> Assign a different config epoch to each node",
+        "\u001b[0m\u001b[29;1m>>> Sending CLUSTER MEET messages to join the cluster",
+        "\u001b[0mWaiting for the cluster to join",
+        "...",
+        "\u001b[29;1m>>> Performing Cluster Check (using node 10.10.0.11:6379)",
+        "\u001b[0mM: 8a8bf31ae259641baef33f68fcd32eeaca81dbb8 10.10.0.11:6379",
+        "   slots:[0-5460] (5461 slots) master",
+        "   1 additional replica(s)",
+        "S: 7ca50ce114444c4795876480ce7d5dbf4cf659e0 10.10.0.14:6379",
+        "   slots: (0 slots) slave",
+        "   replicates d56526901659a710ce450194bfbd1bd60926ad54",
+        "M: d4949b165310dd3e4de53005e0a93f8f6d8d9fbe 10.10.0.12:6379",
+        "   slots:[5461-10922] (5462 slots) master",
+        "   1 additional replica(s)",
+        "M: d56526901659a710ce450194bfbd1bd60926ad54 10.10.0.13:6379",
+        "   slots:[10923-16383] (5461 slots) master",
+        "   1 additional replica(s)",
+        "S: 5f308d65a38d3dca2019a7dd5844ba7411ca4a76 10.10.0.15:6379",
+        "   slots: (0 slots) slave",
+        "   replicates 8a8bf31ae259641baef33f68fcd32eeaca81dbb8",
+        "S: 494e8c8172d7658656dfdf6d16504b73adefd36b 10.10.0.16:6379",
+        "   slots: (0 slots) slave",
+        "   replicates d4949b165310dd3e4de53005e0a93f8f6d8d9fbe",
+        "\u001b[32;1m[OK] All nodes agree about slots configuration.",
+        "\u001b[0m\u001b[29;1m>>> Check for open slots...",
+        "\u001b[0m\u001b[29;1m>>> Check slots coverage...",
+        "\u001b[0m\u001b[32;1m[OK] All 16384 slots covered.",
+        "\u001b[0m"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+redis-node-1               : ok=14   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+redis-node-2               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+redis-node-3               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+redis-node-4               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+redis-node-5               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+redis-node-6               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+Provisioning completed successfully.
+Cluster State: ok
+
+MASTERS
+  10.10.0.11:6379 [master] v7.0.15 slots: 0-5460      keys: 0    mem: 1.78M
+  10.10.0.12:6379 [master] v7.0.15 slots: 5461-10922  keys: 0    mem: 1.81M
+  10.10.0.13:6379 [master] v7.0.15 slots: 10923-16383 keys: 0    mem: 1.80M
+  10.10.0.16:6379 [master] v7.0.15 slots:             keys: 0    mem: 1.73M
+
+REPLICAS
+  10.10.0.14:6379 [replica] v7.0.15 replicating: 10.10.0.13:6379 mem: 1.73M
+  10.10.0.15:6379 [replica] v7.0.15 replicating: 10.10.0.11:6379 mem: 1.73M

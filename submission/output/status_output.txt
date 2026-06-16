@@ -1,0 +1,14 @@
+✓ Docker found: Docker version 29.5.3, build d1c06ef
+✓ Ansible found: ansible-playbook [core 2.20.1]
+Proceeding...
+Cluster State: ok
+
+MASTERS
+  10.10.0.15:6379 [master] v7.2.6 slots: 0-5460 keys: 333 mem: 1.83M
+  10.10.0.14:6379 [master] v7.2.6 slots: 10923-16383 keys: 343 mem: 1.83M
+  10.10.0.16:6379 [master] v7.2.6 slots: 5461-10922 keys: 324 mem: 1.83M
+
+REPLICAS
+  10.10.0.12:6379 [replica] v7.2.6 replicating: 10.10.0.16:6379 mem: 1.69M
+  10.10.0.13:6379 [replica] v7.2.6 replicating: 10.10.0.14:6379 mem: 1.69M
+  10.10.0.11:6379 [replica] v7.2.6 replicating: 10.10.0.15:6379 mem: 1.76M

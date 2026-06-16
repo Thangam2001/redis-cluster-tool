@@ -1,0 +1,33 @@
+- hosts: redis_cluster
+  roles:
+    - role: "{{ playbook_dir }}/../roles/redis"
+  vars:
+    redis_version: "{{ redis_version | default('7.0.15') }}"
+
+- hosts: redis-node-1
+  tasks:
+    - name: Wait for all nodes to be ready
+      wait_for:
+        host: "{{ item }}"
+        port: 6379
+        timeout: 60
+      loop:
+        - 10.10.0.11
+        - 10.10.0.12
+        - 10.10.0.13
+        - 10.10.0.14
+        - 10.10.0.15
+        - 10.10.0.16
+
+    - name: Form Redis Cluster
+      shell: >
+        redis-cli --cluster create
+        10.10.0.11:6379 10.10.0.12:6379 10.10.0.13:6379
+        10.10.0.14:6379 10.10.0.15:6379 10.10.0.16:6379
+        --cluster-replicas 1 --cluster-yes
+      register: cluster_create
+      ignore_errors: yes
+
+    - name: Show cluster create output
+      debug:
+        var: cluster_create.stdout_lines

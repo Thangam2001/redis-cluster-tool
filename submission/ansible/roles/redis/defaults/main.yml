@@ -1,0 +1,6 @@
+redis_version: "7.0.15"
+redis_port: 6379
+redis_cluster_node_timeout: 5000
+redis_install_dir: /usr/local/bin
+redis_data_dir: /data/redis
+redis_conf_path: /etc/redis/redis.conf

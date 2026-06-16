@@ -1,0 +1,17 @@
+- name: Ensure config directory exists
+  file:
+    path: /etc/redis
+    state: directory
+    mode: "0755"
+
+- name: Ensure data directory exists
+  file:
+    path: /data/redis
+    state: directory
+    mode: "0755"
+
+- name: Deploy redis.conf from template
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+    mode: "0644"

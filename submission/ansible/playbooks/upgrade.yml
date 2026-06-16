@@ -1,0 +1,14 @@
+- hosts: "{{ target_host }}"
+  tasks:
+    - name: Stop redis
+      shell: redis-cli -p 6379 shutdown nosave || pkill redis-server || true
+
+    - name: Install new version
+      include_role: { name: redis, tasks_from: install }
+      vars: { redis_version: "{{ new_version }}" }
+
+    - name: Start redis
+      shell: redis-server {{ redis_conf_path | default('/etc/redis/redis.conf') }}
+
+    - name: Wait for port
+      wait_for: { port: 6379, timeout: 60 }

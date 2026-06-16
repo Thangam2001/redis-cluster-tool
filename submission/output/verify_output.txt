@@ -1,0 +1,28 @@
+✓ Docker found: Docker version 29.5.3, build d1c06ef
+✓ Ansible found: ansible-playbook [core 2.20.1]
+Proceeding...
+=== Full Cluster Verification ===
+
+[1/5] Checking data integrity...
+Verifying 1000 keys...
+=== Verify Summary ===
+PASS — 1000/1000 keys verified
+[2/5] Checking version consistency...
+  Versions: [7.0.15] — PASS
+[3/5] Checking topology health...
+  Slots: 16384/16384, Masters: 3, Replicas: 3 — PASS
+[4/5] Checking cluster state...
+  cluster_state: ok — PASS
+[5/5] Checking replication lag...
+  port 6384 master_link_status: up — ok
+  port 6385 master_link_status: up — ok
+  port 6386 master_link_status: up — ok
+
+=== Verification Summary ===
+Data Integrity       : PASS
+Version Consistency  : PASS
+Topology Health      : PASS
+Cluster State        : PASS
+Replication Lag      : PASS
+
+Overall: PASS

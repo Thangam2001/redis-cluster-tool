@@ -1,0 +1,27 @@
+- name: Ensure data and config dirs exist
+  file: { path: "{{ item }}", state: directory, mode: "0755" }
+  loop:
+    - "{{ redis_data_dir }}"
+    - /etc/redis
+
+- name: Download Redis source
+  get_url:
+    url: "https://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
+    dest: "/tmp/redis-{{ redis_version }}.tar.gz"
+
+- name: Extract Redis source
+  unarchive:
+    src: "/tmp/redis-{{ redis_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Build Redis
+  command: make -j2
+  args:
+    chdir: "/tmp/redis-{{ redis_version }}"
+    creates: "/tmp/redis-{{ redis_version }}/src/redis-server"
+
+- name: Install Redis binaries
+  command: make install
+  args:
+    chdir: "/tmp/redis-{{ redis_version }}"
